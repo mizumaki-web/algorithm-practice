@@ -48,6 +48,9 @@ for(int a = 1; a < 60; a++){
   long long m = sqrtl(x);　 //sqrtlは精度の高い平方根(参照 https://learn.microsoft.com/ja-jp/cpp/c-runtime-library/reference/sqrt-sqrtf-sqrtl?view=msvc-170 
   ans += (m+1)/2; //x以下の奇数の平方根の個数
 }
+たとえば x = 50, a = 1の時、x /= 2 より　ｘ = 25
+m = sqrlt(x=25) = 5 つまり b^2 =25
+このとき、bの奇数の数は 1,3,5 の3つ ((m=5 + 1)/2 = 3)
 参考：https://atcoder.jp/contests/abc400/submissions/64568119
 
 今回の学び：全列挙の前に計算量の見積もりを付ける
