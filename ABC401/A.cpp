@@ -12,7 +12,7 @@ int main(){
 }
 
 /*
-問題リンク：https://atcoder.jp/contests/abc400/tasks/abc401_a
+問題リンク：https://atcoder.jp/contests/abc401/tasks/abc401_a
 提出リンク：https://atcoder.jp/contests/abc401/submissions/64735291
 問題概要：正の整数 N (100 <= N <= 999) が与えられる。
 N が 200 以上 299 以下のとき Success 、そうでないとき Failure と出力する。
