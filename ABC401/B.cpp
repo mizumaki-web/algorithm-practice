@@ -23,7 +23,7 @@ int main(){
 }
 
 /*
-問題リンク：https://atcoder.jp/contests/abc400/tasks/abc401_2
+問題リンク：https://atcoder.jp/contests/abc401/tasks/abc401_b
 提出リンク：https://atcoder.jp/contests/abc401/submissions/64746324
 問題概要 : (複雑のため割愛、問題リンクから確認お願いします。)
 アルゴリズム・考え方：
