@@ -24,7 +24,7 @@ int main(){
   
   int ans = 0;
   //処理・出力
-  for(int i = 0; i < N; i++){ //一日ごとに食べられる食材が増える
+  for(int i = 0; i < N; i++){ //1日ずつ克服していく食材の順番
     int now = like[i];
     for(int meal : use[now]){ //"今日食べられるようになった食材" を含む料理についてループ
       bad_use[meal]--;
