@@ -1,22 +1,44 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
-int main(){
-  string T, U;
-  cin >> T >> U;
-  
-  bool ans = false;
-  for(int i = 0; i < (int)T.size() - (int)U.size() + 1; i++){
-    int count = 0;
-    for(int j = 0; j < (int)U.size(); j++){
-      if(T.at(i + j) != U.at(j) && T.at(i + j) != '?') break; 
-      count ++;
-      if(count == U.size()) ans = true;
-    }
-  }
-  
-  if(ans) cout << "Yes" << endl;
-  else cout << "No" << endl;
+int main() {
+  int N;
+  cin >> N;
+  vector<vector<char>> S(N, vector<char>(N)); // 元のグリッド
+  vector<vector<char>> T(N, vector<char>(N)); // 目標グリッド
+
+  // 入力
+  for(int i = 0; i < N; i++) for(int j = 0; j < N; j++) cin >> S[i][j];
+  for(int i = 0; i < N; i++) for(int j = 0; j < N; j++) cin >> T[i][j];
+
+  int min_cost = 10009; //最大は 100*100
+
+  // 回転0回（そのまま比較）
+  int cost_0rot = 0;
+  for(int i = 0; i < N; i++) for(int j = 0; j < N; j++)
+    if (S[i][j] != T[i][j]) cost_0rot++;
+  min_cost = cost_0rot;
+
+  // 回転1回（90度右）
+  int cost_1rot = 1;
+  for(int i = 0; i < N; i++) for(int j = 0; j < N; j++)
+    if (S[N - 1 - j][i] != T[i][j]) cost_1rot++;
+  min_cost = min(min_cost, cost_1rot);
+
+  // 回転2回（180度）
+  int cost_2rot = 2;
+  for(int i = 0; i < N; i++) for(int j = 0; j < N; j++)
+    if (S[N - 1 - i][N - 1 - j] != T[i][j]) cost_2rot;
+  min_cost = min(min_cost, cost_2rot);
+
+  // 回転3回（270度）
+  int cost_3rot= 3;
+  for(int i = 0; i < N; i++) for(int j = 0; j < N; j++)
+    if (S[j][N - 1 - i] != T[i][j]) cost_3rot++;
+  min_cost = min(min_cost, cost_3rot);
+
+  cout << min_cost << endl;
   return 0;
 }
 
@@ -64,10 +86,27 @@ int main(){
 
 
 アルゴリズム・考え方：
-- まず ? の存在や字数は無視して考えます。 
-abcdef に def が含まれるかを調べる場合 abc と def を比較します。
-次に bcd, cde, def と def を比較します。
-つまり文字列を比較するには T をスライドしていきます。 その回数は (T の長さ) - (U の長さ) +1 回になりそうです。先ほどは 6(abcdef) - 3(def) +1 = 4 回でした。
-また、文字列は一度に比較するのではなく、1 文字目が一致していたら2文字目、それも一致していたら３文字目...としていき、 (U の長さ) 回一致していたらよさそうです。
-- 次に ? ですが、これはすべての文字になれる文字なので、T に ? があったら一致とします。
+- 回転数（0~3）+ 書き換え回数(つまり不一致数) を足せばよさそうです
+- そのうち(回転数0~3のうち)、最も合計値の少ないものが答え
+grid の回転は今回毎回行ったが、行っている操作は 90度回転 + 操作数を +1 することなので、関数として表せます。
+例えば
+ for(int i = ri; ri < 4; ri++) {
+    // calc
+    {
+      int now = ri;
+      for(int i; i < N; i++)for(int j; j < N; j++) {
+        if (S[i][j] != T[i][j]) now++;
+      }
+      ans = min(ans, now);
+    }
+    // rotate
+    {
+      vector<vector<char>> NS = S;
+      rep(int i = 0; i < N; i++)for(int j; j < N; j++) {
+        NS[j][N-1-i] = S[i][j];
+      }
+      S = NS; //元のSを更新(回転)
+    }
+  }
+ このようにすればすべての回転を1度に表されます(参考:https://atcoder.jp/contests/abc404/submissions/65482831)。
  */
