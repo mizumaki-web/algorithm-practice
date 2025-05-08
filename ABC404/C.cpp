@@ -7,7 +7,7 @@ int main(){
   int N, M;
   cin >> N >> M;
   atcoder::dsu uf(N);
-  int cycle_count =0;
+  int cycle_count = 0;
   
   for (int i = 0; i < M; i++) {
     int u, v;
@@ -46,7 +46,7 @@ N 頂点 M 辺の無向グラフが与えられる。
 
 アルゴリズム・考え方：
 - ABC399 の C 問題がグラフ問題だったのでそこから思い出しながら解きました
-- "atcoder/dsu.hpp"を使用。
+- "atcoder/dsu.hpp" ライブラリを使用。
 (辺の数) == (頂点の数) && 連結　ならサイクルグラフだと思っていましたが、
 4 4
 1 2
@@ -55,5 +55,37 @@ N 頂点 M 辺の無向グラフが与えられる。
 1 4
 この時サイクルグラフにならないので誤り。
 
+- 今回は次数 (頂点から伸びている辺)がすべて 2 && 連結 を満たすもの
+正解例
+#include <bits/stdc++.h>
+using namespace std;
+#include "atcoder/dsu.hpp"
 
+int main(){
+  int N, M;
+  cin >> N >> M;
+  atcoder::dsu uf(N);
+  int cycle_count = 0;
+    vector<int> deg(N);
+  
+  for (int i = 0; i < M; i++) {
+    int u, v;
+    cin >> u >> v;
+    --u, --v;
+    deg[u]++;
+    deg[v]++;
+    if(uf.same(u, v)) cycle_count ++;
+    else uf.merge(u, v);
+  }
+  
+  bool cycle = ( cycle_count ==1 && deg == vector<int>(N,2));
+  
+  if(cycle) cout << "Yes" << endl;
+  else cout << "No" << endl;
+  
+  return 0;
+}
+
+- deg == vector<int>(N,2) によりすべての次数が 2 である を実現
+参考：https://atcoder.jp/contests/abc404/submissions/65483271
  */
